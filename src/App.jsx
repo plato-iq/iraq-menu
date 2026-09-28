@@ -2,25 +2,125 @@ import { useState } from "react";
 import "./App.css";
 import categories, { menus } from "./menuData";
 import restaurants from "./restaurants";
-const restaurantSlug = window.location.pathname.replace("/", "") || restaurant.slug;
+const restaurantSlug = window.location.pathname.replace("/", "") || "burger-house";
+
 const selectedRestaurant =
   restaurants.find(
     (item) => item.slug === restaurantSlug
   )
-  const selectedMenu = menus[restaurantSlug] || categories;
  
-function App() {
+  const selectedMenu = menus[restaurantSlug] || categories;
+  function PlatoHome() {
+  return (
+    <div className="plato-home">
+      <div className="plato-glow plato-glow-one"></div>
+      <div className="plato-glow plato-glow-two"></div>
+
+      <main className="plato-content">
+        <div className="plato-logo">PLATO</div>
+  <svg
+    className="plato-network"
+    viewBox="0 0 1200 800"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <g className="network-lines">
+      <path d="M-50 180 C180 80 250 300 470 190 S760 70 1250 210" />
+      <path d="M-100 520 C150 400 260 620 500 500 S850 390 1300 540" />
+      <path d="M180 -50 C300 150 250 330 430 430 S650 620 720 850" />
+      <path d="M850 -50 C760 160 900 260 760 410 S920 620 1080 850" />
+      <path d="M-50 680 C180 560 330 700 520 620 S900 520 1250 650" />
+    </g>
+
+    <g className="network-nodes">
+      <circle cx="180" cy="130" r="3" />
+      <circle cx="470" cy="190" r="3" />
+      <circle cx="760" cy="120" r="3" />
+      <circle cx="980" cy="210" r="3" />
+      <circle cx="250" cy="500" r="3" />
+      <circle cx="500" cy="500" r="3" />
+      <circle cx="760" cy="410" r="3" />
+      <circle cx="1000" cy="540" r="3" />
+    </g>
+
+    <g className="network-packets">
+      <circle r="5">
+        <animateMotion
+          dur="7s"
+          repeatCount="indefinite"
+          path="M-50 180 C180 80 250 300 470 190 S760 70 1250 210"
+        />
+      </circle>
+
+      <circle r="4">
+        <animateMotion
+          dur="9s"
+          begin="2s"
+          repeatCount="indefinite"
+          path="M-100 520 C150 400 260 620 500 500 S850 390 1300 540"
+        />
+      </circle>
+
+      <circle r="4">
+        <animateMotion
+          dur="8s"
+          begin="1s"
+          repeatCount="indefinite"
+          path="M180 -50 C300 150 250 330 430 430 S650 620 720 850"
+        />
+      </circle>
+
+      <circle r="5">
+        <animateMotion
+          dur="10s"
+          begin="3s"
+          repeatCount="indefinite"
+          path="M850 -50 C760 160 900 260 760 410 S920 620 1080 850"
+        />
+      </circle>
+    </g>
+  </svg>
+        <p className="plato-slogan">
+          YOUR PARTNER FOR TECH SOLUTION
+        </p>
+
+        <p className="plato-description">
+          حلول تقنية مصممة لتطوير أعمالك
+        </p>
+
+        <div className="plato-contact">
+          <a href="#" className="plato-button">
+            WhatsApp
+          </a>
+
+          <a href="#" className="plato-button">
+            Instagram
+          </a>
+
+          <a href="#" className="plato-button">
+            Facebook
+          </a>
+        </div>
+
+        <p className="plato-footer">
+          © 2026 PLATO
+        </p>
+      </main>
+    </div>
+  );
+}
+ 
+function App() { 
   const [cart, setCart] = useState([]);
-
   const [showCheckout, setShowCheckout] = useState(false);
-
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
-
   const [orderType, setOrderType] = useState("استلام من المطعم");
-
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
+    if (window.location.pathname === "/") {
+    return <PlatoHome />;
+  }
 
   // إضافة منتج للسلة
   function addToCart(item) {
@@ -172,6 +272,7 @@ function sendToWhatsApp() {
 }
   return (
     <div className="app">
+    <div className="brand-name">PLATO</div>
 
       {/* =========================
           HEADER / COVER

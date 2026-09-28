@@ -2186,3 +2186,106 @@ textarea:focus-visible {
 .send-order-button:active {
   transform: scale(0.98);
 }
+/* =========================
+   PLATO DIGITAL NETWORK
+   ========================= */
+
+.plato-network {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.network-lines path {
+  fill: none;
+  stroke: rgba(96, 165, 250, 0.13);
+  stroke-width: 1;
+  stroke-dasharray: 8 14;
+  animation: networkFlow 8s linear infinite;
+}
+
+.network-lines path:nth-child(2) {
+  animation-duration: 11s;
+  animation-direction: reverse;
+}
+
+.network-lines path:nth-child(3) {
+  animation-duration: 13s;
+}
+
+.network-lines path:nth-child(4) {
+  animation-duration: 10s;
+  animation-direction: reverse;
+}
+
+.network-lines path:nth-child(5) {
+  animation-duration: 15s;
+}
+
+.network-nodes circle {
+  fill: rgba(147, 197, 253, 0.8);
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.8));
+  animation: nodePulse 3s ease-in-out infinite;
+}
+
+.network-nodes circle:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.network-nodes circle:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+.network-nodes circle:nth-child(4) {
+  animation-delay: 1.2s;
+}
+
+.network-nodes circle:nth-child(5) {
+  animation-delay: 1.6s;
+}
+
+.network-nodes circle:nth-child(6) {
+  animation-delay: 2s;
+}
+
+.network-nodes circle:nth-child(7) {
+  animation-delay: 2.4s;
+}
+
+.network-nodes circle:nth-child(8) {
+  animation-delay: 2.8s;
+}
+
+.network-packets circle {
+  fill: #ffffff;
+  filter:
+    drop-shadow(0 0 5px rgba(96, 165, 250, 0.9))
+    drop-shadow(0 0 14px rgba(139, 92, 246, 0.7));
+}
+
+@keyframes networkFlow {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes nodePulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}

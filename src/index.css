@@ -1701,3 +1701,248 @@ textarea:focus-visible {
   }
 
 }
+/* =========================
+   PLATO TECH LANDING PAGE
+   ========================= */
+
+.plato-home {
+  min-height: 100vh;
+  min-height: 100svh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.14), transparent 32%),
+    radial-gradient(circle at 80% 75%, rgba(139, 92, 246, 0.14), transparent 32%),
+    linear-gradient(135deg, #050816, #0a1024 50%, #070b18);
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+}
+
+/* subtle animated background grid */
+
+.plato-home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 55px 55px;
+  mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
+  pointer-events: none;
+}
+
+/* moving light */
+
+.plato-home::after {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.09),
+    rgba(139, 92, 246, 0.07),
+    transparent
+  );
+  filter: blur(70px);
+  animation: platoOrb 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.plato-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: platoFloat 10s ease-in-out infinite alternate;
+}
+
+.plato-glow-one {
+  width: 280px;
+  height: 280px;
+  top: -100px;
+  left: -80px;
+  background: rgba(59, 130, 246, 0.12);
+}
+
+.plato-glow-two {
+  width: 320px;
+  height: 320px;
+  right: -100px;
+  bottom: -120px;
+  background: rgba(139, 92, 246, 0.11);
+  animation-delay: -4s;
+}
+
+.plato-content {
+  position: relative;
+  z-index: 2;
+  width: min(90%, 700px);
+  text-align: center;
+  padding: 40px 20px;
+  animation: platoEntrance 1s ease-out both;
+}
+
+.plato-logo {
+  font-size: clamp(56px, 12vw, 110px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  background: linear-gradient(
+    110deg,
+    #ffffff 10%,
+    #8ab4ff 45%,
+    #b69cff 70%,
+    #ffffff 90%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: platoGradient 6s ease-in-out infinite;
+  text-shadow: 0 0 45px rgba(96, 165, 250, 0.12);
+}
+
+.plato-slogan {
+  margin: 24px 0 0;
+  font-size: clamp(13px, 2vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.plato-description {
+  margin: 16px auto 0;
+  font-family: "Cairo", sans-serif;
+  font-size: clamp(15px, 2.5vw, 19px);
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.plato-contact {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 38px;
+}
+
+.plato-button {
+  min-width: 125px;
+  padding: 13px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.plato-button:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(139, 92, 246, 0.45);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.12);
+}
+
+.plato-button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.plato-footer {
+  margin-top: 55px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.32);
+}
+
+/* animations */
+
+@keyframes platoEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes platoGradient {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+
+  50% {
+    background-position: 100% center;
+  }
+}
+
+@keyframes platoOrb {
+  0% {
+    transform: translate(-80px, -40px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(100px, 70px) scale(1.15);
+  }
+}
+
+@keyframes platoFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(35px, -25px) scale(1.08);
+  }
+}
+
+/* mobile */
+
+@media (max-width: 600px) {
+  .plato-home::before {
+    background-size: 40px 40px;
+  }
+
+  .plato-content {
+    padding: 30px 18px;
+  }
+
+  .plato-logo {
+    letter-spacing: 0.08em;
+  }
+
+  .plato-slogan {
+    line-height: 1.6;
+    letter-spacing: 0.12em;
+  }
+
+  .plato-contact {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .plato-button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
