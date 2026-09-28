@@ -6,7 +6,7 @@ const restaurantSlug = window.location.pathname.replace("/", "") || restaurant.s
 const selectedRestaurant =
   restaurants.find(
     (item) => item.slug === restaurantSlug
-  ) ||  (restaurantSlug === restaurant.slug ? restaurant : null);
+  )
   const selectedMenu = menus[restaurantSlug] || categories;
  
 function App() {
