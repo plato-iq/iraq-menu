@@ -721,7 +721,7 @@ setShowCheckout(false);
                   )
                 }
               >
-                استلام
+استلام من المطعم
               </button>
 
               <button
