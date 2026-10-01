@@ -11,7 +11,7 @@ const menus = {
           description: "لحم، خس، طماطم وصوص خاص",
           price: 3000,
           image:
-            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
+            "/IMG/MEAT BURGER.png",
           imageAlt: "كلاسك برجر لحم",
           available: true,
           orderEnabled: true,

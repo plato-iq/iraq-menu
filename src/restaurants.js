@@ -6,7 +6,7 @@ const restaurants = [
     phone: "9647722248374",
     location: "https://maps.app.goo.gl/mxJWrzvZRNE1VjkU6",
     logo: "CH",
-    logoImage: "/logos/chef-bashar.png",
+    logoImage: "/logos/1.jpg",
     theme: {
   primary: "#7c3aed",
   dark: "#171717",
