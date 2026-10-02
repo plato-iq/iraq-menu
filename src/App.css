@@ -112,7 +112,6 @@ a {
 /* =========================
    HERO
    ========================== */
-
 .hero {
   position: relative;
 
@@ -125,7 +124,7 @@ a {
       rgba(0, 0, 0, 0.35) 45%,
       rgba(0, 0, 0, 0.82) 100%
     ),
-    url("https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1600");
+    url("C:\\Users\\Lenovo\\Downloads\\555.jpg");
 
   background-size: cover;
   background-position: center;
@@ -222,8 +221,8 @@ a {
    ========================== */
 
 .logo {
-  width: 78px;
-  height: 78px;
+  width: 110px;
+  height: 110px;
 
   margin: 0 auto 15px;
 
@@ -231,7 +230,7 @@ a {
   align-items: center;
   justify-content: center;
 
-  border-radius: 50%;
+  border-radius: 100%;
 
   background:
     linear-gradient(
@@ -256,6 +255,7 @@ a {
     logoAppear 900ms
     cubic-bezier(0.2, 0.8, 0.2, 1)
     both;
+    
 }
 
 @keyframes logoAppear {
@@ -1520,8 +1520,8 @@ main {
   }
 
   .logo {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
 
     font-size: 20px;
   }
@@ -3621,4 +3621,22 @@ body.restaurant-mode .cart .show-cart-button {
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+}
+
+/* =========================
+   RESTAURANT LOGO SIZE FIX
+   ========================= */
+
+body.restaurant-mode .logo {
+  width: 115px;
+  height: 115px;
+  margin: 0 auto 15px;
+  overflow: hidden;
+}
+
+body.restaurant-mode .logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }

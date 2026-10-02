@@ -159,8 +159,7 @@ if (
 }
 
 function generateOrderNumber() {
-  const timePart = Date.now().toString().slice(-6);
-  const randomPart = Math.floor(100 + Math.random() * 900);
+ const number = Math.floor(1 + Math.random() * 999);
 
-  return `PL-${timePart}-${randomPart}`;
+  return String(number).padStart(3, "0");
 }
