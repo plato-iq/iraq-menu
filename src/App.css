@@ -124,7 +124,7 @@ a {
       rgba(0, 0, 0, 0.35) 45%,
       rgba(0, 0, 0, 0.82) 100%
     ),
-    url("C:\\Users\\Lenovo\\Downloads\\555.jpg");
+    url("/IMG/MEAT BURGER.png");
 
   background-size: cover;
   background-position: center;
@@ -3385,7 +3385,7 @@ body.restaurant-mode .brand-name {
   align-items: center;
   justify-content: center;
 
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 0, 0, 0.96);
 
   border-bottom: 1px solid rgba(0, 0, 0, 0.055);
 
@@ -3441,7 +3441,7 @@ body.restaurant-mode .brand-name {
 
   box-sizing: border-box;
 
-  z-index: 100;
+  z-index: 0;
 }
 
 body.restaurant-mode .brand-name span {
@@ -3639,4 +3639,27 @@ body.restaurant-mode .logo img {
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+/* =========================
+   CART — SHOW CART BUTTON
+   ========================= */
+
+body.restaurant-mode .show-cart-button {
+  color: #ffffff !important;
+  background: #ff5a36 !important;
+  border: 2px solid #ff5a36 !important;
+  transition: all 0.25s ease;
+}
+
+body.restaurant-mode .show-cart-button:hover,
+body.restaurant-mode .show-cart-button:active,
+body.restaurant-mode .show-cart-button:focus {
+  color: #ffffff !important;
+  background: linear-gradient(
+    135deg,
+    #ff5a36,
+    #c63f24
+  ) !important;
+  border-color: #ff5a36 !important;
 }

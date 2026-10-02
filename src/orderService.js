@@ -161,5 +161,4 @@ if (
 function generateOrderNumber() {
  const number = Math.floor(1 + Math.random() * 999);
 
-  return String(number).padStart(3, "0");
-}
+ return `P-${String(number).padStart(3, "0")}`;}

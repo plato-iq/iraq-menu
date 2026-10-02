@@ -193,32 +193,40 @@ const [whatsappUrl, setWhatsappUrl] = useState("");
   // إضافة منتج للسلة
   // =========================
 
-  function addToCart(item) {
-    setCart((currentCart) => {
-      const existingItem = currentCart.find(
-        (cartItem) => cartItem.id === item.id
-      );
-
-      if (existingItem) {
-        return currentCart.map((cartItem) =>
-          cartItem.id === item.id
-            ? {
-                ...cartItem,
-                quantity: cartItem.quantity + 1,
-              }
-            : cartItem
-        );
-      }
-
-      return [
-        ...currentCart,
-        {
-          ...item,
-          quantity: 1,
-        },
-      ];
-    });
+ function addToCart(item) {
+  if (
+    !selectedRestaurant.orderEnabled ||
+    !item.available ||
+    !item.orderEnabled
+  ) {
+    return;
   }
+
+  setCart((currentCart) => {
+    const existingItem = currentCart.find(
+      (cartItem) => cartItem.id === item.id
+    );
+
+    if (existingItem) {
+      return currentCart.map((cartItem) =>
+        cartItem.id === item.id
+          ? {
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
+            }
+          : cartItem
+      );
+    }
+
+    return [
+      ...currentCart,
+      {
+        ...item,
+        quantity: 1,
+      },
+    ];
+  });
+}
 
   // =========================
   // زيادة الكمية
@@ -518,13 +526,24 @@ setShowCheckout(false);
                       </strong>
 
                       {selectedRestaurant.orderEnabled && (
-  <button
-    onClick={() =>
-      addToCart(item)
-    }
-  >
-    أضف للسلة
-  </button>
+  <>
+    {!item.available ? (
+      <button type="button" disabled>
+        غير متوفر
+      </button>
+    ) : !item.orderEnabled ? (
+      <button type="button" disabled>
+        الطلب متوقف
+      </button>
+    ) : (
+      <button
+        type="button"
+        onClick={() => addToCart(item)}
+      >
+        أضف للسلة
+      </button>
+    )}
+  </>
 )}
                     </div>
                   </div>
