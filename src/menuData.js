@@ -163,12 +163,12 @@ const menus = {
         },
          {
           id: "ch-012",
-          name: "Pepsi",
-          description: "بيبسي بارد",
+          name: "7up",
+          description: "سفن اب بارد",
           price: 500,
           image:
             "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=600",
-          imageAlt: "Pepsi",
+          imageAlt: "7up",
           available: true,
           orderEnabled: true,
           order: 12,
@@ -194,6 +194,6 @@ function getAvailableItems(slug) {
 
 export { menus, getMenuBySlug, getAvailableItems };
 
-export const categories = menus["burger-house"];
+export const categories = menus["chef-bashar"];
 
 export default categories;

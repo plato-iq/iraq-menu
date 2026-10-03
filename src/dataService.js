@@ -4,21 +4,28 @@ import { getMenuBySlug } from "./menuData";
 export function getRestaurant(slug) {
   return getRestaurantBySlug(slug);
 }
-
-export function getRestaurantMenu(slug) {
-  return getMenuBySlug(slug);
-}
-
-export function getRestaurantData(slug) {
+export function getRestaurantSettings(slug) {
   const restaurant = getRestaurant(slug);
-  const menu = getRestaurantMenu(slug);
 
   if (!restaurant) {
     return null;
   }
 
   return {
-    restaurant,
-    menu,
+    slug: restaurant.slug,
+    name: restaurant.name,
+    description: restaurant.description,
+    phone: restaurant.phone,
+    location: restaurant.location,
+    logo: restaurant.logo,
+    logoImage: restaurant.logoImage,
+    branchesEnabled: restaurant.branchesEnabled,
+    branches: restaurant.branches || [],
+    theme: restaurant.theme,
+    currency: restaurant.currency,
+    orderEnabled: restaurant.orderEnabled,
   };
+}
+export function getRestaurantMenu(slug) {
+  return getMenuBySlug(slug);
 }

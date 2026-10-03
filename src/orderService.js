@@ -5,6 +5,7 @@ export const ORDER_STATUSES = {
   COMPLETED: "completed",
   CANCELLED: "cancelled",
 };
+
 export function createOrder({
   restaurant,
   customerName,
@@ -18,7 +19,7 @@ export function createOrder({
 }) {
   validateOrderData({
     restaurant,
-      selectedBranch,
+    selectedBranch,
     customerName,
     customerPhone,
     orderType,
@@ -27,7 +28,9 @@ export function createOrder({
     cart,
   });
 
-  const orderNumber = generateOrderNumber();
+  const orderNumber = generateOrderNumber(
+    restaurant.slug
+  );
 
   const items = cart.map((item) => ({
     id: item.id,
@@ -43,8 +46,8 @@ export function createOrder({
   );
 
   const branch = restaurant.branches?.find(
-  (item) => item.id === selectedBranch
-);
+    (item) => item.id === selectedBranch
+  );
 
   return {
     orderNumber,
@@ -55,13 +58,13 @@ export function createOrder({
     },
 
     branch: branch
-  ? {
-      id: branch.id,
-      name: branch.name,
-       phone: branch.phone || "",
-      location: branch.location || "",
-    }
-  : null,
+      ? {
+          id: branch.id,
+          name: branch.name,
+          phone: branch.phone || "",
+          location: branch.location || "",
+        }
+      : null,
 
     customer: {
       name: customerName.trim(),
@@ -89,7 +92,8 @@ export function createOrder({
     currency: restaurant.currency || "د.ع",
 
     createdAt: new Date().toISOString(),
-    status: "new",
+
+    status: ORDER_STATUSES.NEW,
   };
 }
 
@@ -106,28 +110,10 @@ function validateOrderData({
   if (!restaurant) {
     throw new Error("المطعم غير موجود");
   }
-  if (
-  orderType !== "داخل المطعم" &&
-  restaurant.branchesEnabled &&
-  restaurant.branches?.length > 0 &&
-  !selectedBranch
-) {
-  throw new Error("الفرع مطلوب");
-}
 
- if (
-  orderType !== "داخل المطعم" &&
-  !customerName?.trim()
-) {
-  throw new Error("اسم الزبون مطلوب");
-}
-
-if (
-  orderType !== "داخل المطعم" &&
-  !customerPhone?.trim()
-) {
-  throw new Error("رقم الهاتف مطلوب");
-}
+  if (restaurant.orderEnabled === false) {
+    throw new Error("الطلبات متوقفة حاليًا");
+  }
 
   const allowedOrderTypes = [
     "داخل المطعم",
@@ -137,6 +123,20 @@ if (
 
   if (!allowedOrderTypes.includes(orderType)) {
     throw new Error("نوع الطلب غير صحيح");
+  }
+
+  if (
+    orderType !== "داخل المطعم" &&
+    !customerName?.trim()
+  ) {
+    throw new Error("اسم الزبون مطلوب");
+  }
+
+  if (
+    orderType !== "داخل المطعم" &&
+    !customerPhone?.trim()
+  ) {
+    throw new Error("رقم الهاتف مطلوب");
   }
 
   if (
@@ -151,6 +151,30 @@ if (
     !address?.trim()
   ) {
     throw new Error("عنوان التوصيل مطلوب");
+  }
+
+  if (
+    orderType !== "داخل المطعم" &&
+    restaurant.branchesEnabled &&
+    restaurant.branches?.length > 0
+  ) {
+    if (!selectedBranch) {
+      throw new Error("الفرع مطلوب");
+    }
+
+    const branch = restaurant.branches.find(
+      (item) => item.id === selectedBranch
+    );
+
+    if (!branch) {
+      throw new Error("الفرع المختار غير موجود");
+    }
+
+    if (!branch.phone?.trim()) {
+      throw new Error(
+        "رقم WhatsApp الخاص بالفرع غير موجود"
+      );
+    }
   }
 
   if (!Array.isArray(cart) || cart.length === 0) {
@@ -168,6 +192,7 @@ if (
 
     if (
       typeof item.price !== "number" ||
+      !Number.isFinite(item.price) ||
       item.price < 0
     ) {
       throw new Error("سعر الصنف غير صحيح");
@@ -182,7 +207,29 @@ if (
   }
 }
 
-function generateOrderNumber() {
- const number = Math.floor(1 + Math.random() * 999);
+function generateOrderNumber(slug) {
+  const storageKey = `plato-order-number-${slug}`;
 
- return `P-${String(number).padStart(3, "0")}`;}
+  let lastNumber = 0;
+
+  try {
+    lastNumber =
+      Number(localStorage.getItem(storageKey)) || 0;
+  } catch {
+    lastNumber = 0;
+  }
+
+  const nextNumber =
+    lastNumber >= 999 ? 1 : lastNumber + 1;
+
+  try {
+    localStorage.setItem(
+      storageKey,
+      String(nextNumber)
+    );
+  } catch {
+    // Continue even if localStorage is unavailable.
+  }
+
+  return `P-${String(nextNumber).padStart(3, "0")}`;
+}

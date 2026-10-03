@@ -1,18 +1,19 @@
 import { useState } from "react";
 import "./App.css";
-import { getRestaurantData } from "./dataService";
+import {
+  getRestaurantMenu,
+  getRestaurantSettings,
+} from "./dataService";
 import { createOrder } from "./orderService";
 
 const restaurantSlug =
   window.location.pathname.split("/").filter(Boolean)[0] || "burger-house";
 
-const restaurantData = getRestaurantData(restaurantSlug);
-console.log("PATH:", window.location.pathname);
-console.log("SLUG:", restaurantSlug);
-console.log("RESTAURANT:", restaurantData);
+const selectedRestaurant =
+  getRestaurantSettings(restaurantSlug);
 
-const selectedRestaurant = restaurantData?.restaurant;
-const selectedMenu = restaurantData?.menu || [];
+const selectedMenu =
+  getRestaurantMenu(restaurantSlug);
 const restaurantTheme = selectedRestaurant?.theme || {
   primary: "#ff5a36",
   dark: "#171717",
@@ -298,10 +299,7 @@ function handleOrderTypeChange(type) {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-const selectedBranchData =
-  selectedRestaurant.branches?.find(
-    (branch) => branch.id === selectedBranch
-  );
+
   // =========================
   // فتح Checkout
   // =========================
@@ -389,6 +387,7 @@ function sendToWhatsApp() {
       cart,
     });
     setCreatedOrder(order);
+    setCart([]);
   } catch (error) {
     alert(error.message);
     return;
