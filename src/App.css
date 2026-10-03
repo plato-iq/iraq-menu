@@ -315,6 +315,8 @@ a {
    ========================== */
 
 .buttons {
+  position: relative;
+
   display: flex;
 
   justify-content: center;
@@ -324,7 +326,8 @@ a {
   flex-wrap: wrap;
 }
 
-.buttons a {
+.buttons a,
+.buttons button {
   min-width: 120px;
 
   padding: 11px 18px;
@@ -356,7 +359,8 @@ a {
     background var(--transition);
 }
 
-.buttons a:hover {
+.buttons a:hover,
+.buttons button:hover {
   transform: translateY(-3px);
 
   box-shadow:
@@ -365,11 +369,17 @@ a {
   background: white;
 }
 
-.buttons a:active {
+.buttons a:active,
+.buttons button:active {
   transform: translateY(0) scale(0.97);
 }
 
+.location-button-wrapper {
+  position: relative;
+  display: inline-block;
+}
 
+ 
 /* =========================
    MAIN
    ========================== */
@@ -3663,3 +3673,82 @@ body.restaurant-mode .show-cart-button:focus {
   ) !important;
   border-color: #ff5a36 !important;
 }
+
+/* =========================
+   BRANCH SELECTOR
+========================= */
+
+.branch-selector {
+  width: min(900px, calc(100% - 24px));
+  margin: 24px auto;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(14px);
+  text-align: center;
+}
+
+.branch-selector h3 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.branch-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.branch-buttons button {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #171717;
+  padding: 11px 20px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.branch-buttons button:hover {
+  transform: translateY(-2px);
+}
+
+.branch-buttons button.active {
+  background: var(--primary-color, #7c3aed);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.22);
+}
+
+.branch-buttons button:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 600px) {
+  .branch-selector {
+    margin: 18px auto;
+    padding: 15px;
+    border-radius: 18px;
+  }
+
+  .branch-buttons {
+    gap: 8px;
+  }
+
+  .branch-buttons button {
+    flex: 1;
+    min-width: 130px;
+    padding: 10px 14px;
+  }
+}
+

@@ -13,10 +13,12 @@ export function createOrder({
   tableNumber,
   address,
   notes,
+  selectedBranch,
   cart,
 }) {
   validateOrderData({
     restaurant,
+      selectedBranch,
     customerName,
     customerPhone,
     orderType,
@@ -40,6 +42,10 @@ export function createOrder({
     0
   );
 
+  const branch = restaurant.branches?.find(
+  (item) => item.id === selectedBranch
+);
+
   return {
     orderNumber,
 
@@ -47,6 +53,15 @@ export function createOrder({
       slug: restaurant.slug,
       name: restaurant.name,
     },
+
+    branch: branch
+  ? {
+      id: branch.id,
+      name: branch.name,
+       phone: branch.phone || "",
+      location: branch.location || "",
+    }
+  : null,
 
     customer: {
       name: customerName.trim(),
@@ -80,6 +95,7 @@ export function createOrder({
 
 function validateOrderData({
   restaurant,
+  selectedBranch,
   customerName,
   customerPhone,
   orderType,
@@ -90,6 +106,14 @@ function validateOrderData({
   if (!restaurant) {
     throw new Error("المطعم غير موجود");
   }
+  if (
+  orderType !== "داخل المطعم" &&
+  restaurant.branchesEnabled &&
+  restaurant.branches?.length > 0 &&
+  !selectedBranch
+) {
+  throw new Error("الفرع مطلوب");
+}
 
  if (
   orderType !== "داخل المطعم" &&

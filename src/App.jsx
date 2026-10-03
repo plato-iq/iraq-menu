@@ -158,7 +158,14 @@ const [whatsappUrl, setWhatsappUrl] = useState("");
   const [tableNumber, setTableNumber] = useState("");
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
+  const [selectedBranch, setSelectedBranch] = useState("");
+function handleOrderTypeChange(type) {
+  setOrderType(type);
 
+  if (type === "داخل المطعم") {
+    setSelectedBranch("");
+  }
+}
   if (window.location.pathname === "/") {
     return <PlatoHome />;
   }
@@ -291,7 +298,10 @@ const [whatsappUrl, setWhatsappUrl] = useState("");
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-
+const selectedBranchData =
+  selectedRestaurant.branches?.find(
+    (branch) => branch.id === selectedBranch
+  );
   // =========================
   // فتح Checkout
   // =========================
@@ -349,6 +359,16 @@ function sendToWhatsApp() {
     return;
   }
 
+  if (
+  orderType !== "داخل المطعم" &&
+  selectedRestaurant.branchesEnabled &&
+  selectedRestaurant.branches?.length > 0 &&
+  !selectedBranch
+) {
+  alert("يرجى اختيار الفرع");
+  return;
+}
+
   if (cart.length === 0) {
     alert("السلة فارغة");
     return;
@@ -365,6 +385,7 @@ function sendToWhatsApp() {
       tableNumber,
       address,
       notes,
+      selectedBranch,
       cart,
     });
     setCreatedOrder(order);
@@ -373,8 +394,9 @@ function sendToWhatsApp() {
     return;
   }
 
-  const phone = selectedRestaurant.phone;
-
+const phone =
+  order.branch?.phone ||
+  selectedRestaurant.phone;
   let message = "";
 
   message += `طلب جديد - ${selectedRestaurant.name}\n`;
@@ -387,6 +409,10 @@ function sendToWhatsApp() {
   }
 
   message += `نوع الطلب: ${orderType}\n`;
+
+  if (order.branch) {
+  message += `الفرع: ${order.branch.name}\n`;
+}
 
   if (orderType === "داخل المطعم") {
     message += `رقم الطاولة: ${tableNumber.trim()}\n`;
@@ -455,13 +481,22 @@ setShowCheckout(false);
         تواصل معنا
       </a>
 
-      <a
-        href={selectedRestaurant.location}
-        target="_blank"
-        rel="noreferrer"
-      >
-        موقع المطعم
-      </a>
+      <div className="location-button-wrapper">
+
+        <button
+          type="button"
+          onClick={() => {
+            window.open(
+              selectedRestaurant.location,
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }}
+        >
+          موقع المطعم
+        </button>
+
+      </div>
 
     </div>
 
@@ -703,7 +738,35 @@ setShowCheckout(false);
     />
   </>
 )}
+{/* اختيار الفرع */}
 
+{selectedRestaurant.branchesEnabled && selectedRestaurant.branches?.length > 0 ? (
+  <>
+    {orderType !== "داخل المطعم" && (
+      <>
+        <label>اختر الفرع</label>
+
+        <select
+          value={selectedBranch}
+          onChange={(e) => setSelectedBranch(e.target.value)}
+        >
+          <option value="">
+            اختر الفرع
+          </option>
+
+          {selectedRestaurant.branches.map((branch) => (
+            <option
+              key={branch.id}
+              value={branch.id}
+            >
+              {branch.name}
+            </option>
+          ))}
+        </select>
+      </>
+    )}
+  </>
+) : null}
             {/* نوع الطلب */}
 
             <label>نوع الطلب</label>
@@ -718,7 +781,7 @@ setShowCheckout(false);
                     : ""
                 }
                 onClick={() =>
-                  setOrderType(
+                  handleOrderTypeChange(
                     "داخل المطعم"
                   )
                 }
@@ -735,7 +798,7 @@ setShowCheckout(false);
                     : ""
                 }
                 onClick={() =>
-                  setOrderType(
+                  handleOrderTypeChange(
                     "استلام من المطعم"
                   )
                 }
@@ -751,7 +814,7 @@ setShowCheckout(false);
                     : ""
                 }
                 onClick={() =>
-                  setOrderType("توصيل")
+                  handleOrderTypeChange("توصيل")
                 }
               >
                 توصيل
